@@ -3,118 +3,643 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phan Đăng Dương</title>
+    <title>Phan Đăng Dương - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a1a;
+            --card-bg: rgba(255,255,255,0.04);
+            --card-border: rgba(255,255,255,0.08);
+            --text: #e4e4e7;
+            --text-muted: #a1a1aa;
+            --accent-pink: #ff6ec4;
+            --accent-purple: #7873f5;
+            --accent-cyan: #4adede;
+            --accent-gold: #fbbf24;
+            --accent-green: #34d399;
+            --accent-red: #f87171;
         }
 
         body {
-            background: #0a0a2e;
-            overflow: hidden;
-            height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .marquee-container {
-            width: 100%;
-            overflow: hidden;
             position: relative;
+            overflow: hidden;
         }
 
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            font-size: 5rem;
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(120,115,245,0.15), transparent 70%);
+            top: -200px; right: -100px;
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255,110,196,0.1), transparent 70%);
+            bottom: -150px; left: -100px;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .name {
+            font-size: clamp(2.5rem, 7vw, 5rem);
             font-weight: 900;
-            background: linear-gradient(90deg, #ff6ec4, #7873f5, #4adede, #ff6ec4);
-            background-size: 300% 100%;
+            background: linear-gradient(135deg, #ff6ec4, #7873f5, #4adede);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: scroll-left 8s linear infinite, gradient-shift 3s ease infinite;
-            filter: drop-shadow(0 0 20px rgba(120, 115, 245, 0.5));
-        }
-
-        @keyframes scroll-left {
-            0% {
-                transform: translateX(100vw);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
+            animation: gradient-shift 4s ease infinite;
+            background-size: 200% 200%;
+            margin-bottom: 1rem;
         }
 
         @keyframes gradient-shift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        /* Floating particles */
+        .tagline {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* ===== SECTIONS ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== CARDS ===== */
+        .card-grid {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-2px);
+        }
+
+        .card-role {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-org {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== EVENT CARDS ===== */
+        .event-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .event-badge {
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-lead { background: rgba(255,110,196,0.15); color: var(--accent-pink); }
+        .badge-vice { background: rgba(120,115,245,0.15); color: var(--accent-purple); }
+        .badge-member { background: rgba(74,222,222,0.15); color: var(--accent-cyan); }
+
+        /* ===== COMPETITION CARDS ===== */
+        .comp-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .comp-rank {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rank-champion { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.1)); color: var(--accent-gold); border: 1px solid rgba(251,191,36,0.3); }
+        .rank-top { background: rgba(52,211,153,0.12); color: var(--accent-green); }
+        .rank-prize { background: rgba(120,115,245,0.15); color: var(--accent-purple); }
+
+        .comp-name {
+            font-size: 0.9rem;
+        }
+
+        /* ===== AMBASSADOR ===== */
+        .amb-card {
+            border-left: 3px solid var(--accent-purple);
+            padding-left: 1.2rem !important;
+        }
+
+        /* ===== VOLUNTEER ===== */
+        .vol-card {
+            border-left: 3px solid var(--accent-green);
+            padding-left: 1.2rem !important;
+        }
+
+        .vol-location {
+            font-size: 0.8rem;
+            color: var(--accent-green);
+            margin-top: 0.3rem;
+        }
+
+        /* ===== DIVIDER ===== */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+            margin: 0;
+        }
+
+        /* ===== SUB HEADING ===== */
+        .sub-heading {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .sub-heading:first-child {
+            margin-top: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        footer .name-small {
+            background: linear-gradient(135deg, #ff6ec4, #7873f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        /* ===== PARTICLES ===== */
         .particle {
             position: fixed;
             border-radius: 50%;
             pointer-events: none;
             animation: float-up linear infinite;
-            opacity: 0.6;
+            opacity: 0.4;
+            z-index: 0;
         }
 
         @keyframes float-up {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .section-title { font-size: 1.3rem; }
+            .card { padding: 1rem; }
+            .event-card { flex-direction: column; gap: 0.4rem; }
+            .comp-card { flex-direction: column; gap: 0.4rem; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
-    <div class="marquee-container">
-        <span class="marquee-text">✨ Phan Đăng Dương ✨</span>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="greeting">Xin chào, tôi là</p>
+            <h1 class="name">Phan Đăng Dương</h1>
+            <p class="tagline">Sinh viên Đại học Kinh tế Quốc dân</p>
+        </div>
+        <div class="scroll-hint">↓</div>
+    </section>
+
+    <div class="container">
+
+        <!-- CLB & TỔ CHỨC -->
+        <section>
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(120,115,245,0.12);">🏛️</div>
+                <div>
+                    <div class="section-title">Câu lạc bộ & Tổ chức</div>
+                    <div class="section-subtitle">Hoạt động đoàn thể tại NEU</div>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-role">Chủ nhiệm</div>
+                    <div class="card-org">CLB Phát triển Nghề nghiệp ĐH KTQD — NEU Career Path Club Gen 2</div>
+                </div>
+                <div class="card">
+                    <div class="card-role">Thành viên Ban Hợp tác Doanh nghiệp</div>
+                    <div class="card-org">CLB Định hướng Sinh viên — NEU Orientation Club</div>
+                </div>
+                <div class="card">
+                    <div class="card-role">Thành viên</div>
+                    <div class="card-org">Đội SVTN Đồng hương Nghệ An — Hà Tĩnh NEU</div>
+                </div>
+                <div class="card">
+                    <div class="card-role">CTV Ban Truyền thông — Kĩ thuật</div>
+                    <div class="card-org">CLB Phong cách Sinh viên — NBC</div>
+                </div>
+                <div class="card">
+                    <div class="card-role">Thành viên</div>
+                    <div class="card-org">CLB Toán Kinh tế và Công nghệ số</div>
+                </div>
+                <div class="card">
+                    <div class="card-role">Cộng tác viên</div>
+                    <div class="card-org">Trung tâm Đổi mới sáng tạo và Hướng nghiệp — NEU</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- SỰ KIỆN -->
+        <section>
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(255,110,196,0.12);">🎤</div>
+                <div>
+                    <div class="section-title">Sự kiện đã tổ chức</div>
+                    <div class="section-subtitle">Vai trò lãnh đạo & thành viên BTC</div>
+                </div>
+            </div>
+
+            <p class="sub-heading">🔥 Trưởng Ban Tổ Chức</p>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-lead">Trưởng BTC</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Content Creator"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-lead">Trưởng BTC</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Kiểm Toán"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-lead">Trưởng BTC</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Data"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-lead">Trưởng BTC</span>
+                        <div>Webinar: <strong>"Road To Case Champion — Hành Trình Chinh Phục Giải Case"</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="sub-heading">⚡ Phó Ban Tổ Chức</p>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-vice">Phó BTC</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Marketing"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-vice">Phó BTC</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Sales"</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="sub-heading">👥 Thành viên Ban Tổ Chức</p>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Talkshow: <strong>"Chạm Data — Mở lối vươn xa"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div><strong>Tuần nghề nghiệp và việc làm — NEU Career Week 2026</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Talkshow: <strong>"Chromatique: Tích tạo kỳ tích — Bewitch your brand"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Kế Toán"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Webinar: <strong>"Your Science Story — Khi Nghiên cứu Khoa học là câu chuyện của chính bạn"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Talkshow: <strong>"Cafe Career Talk — Chuyện Nghề Nhân sự"</strong></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="event-card">
+                        <span class="event-badge badge-member">Thành viên</span>
+                        <div>Talkshow: <strong>"Công cụ định lượng — Từ giảng đường đến thực tiễn"</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- CUỘC THI -->
+        <section>
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(251,191,36,0.12);">🏆</div>
+                <div>
+                    <div class="section-title">Các cuộc thi</div>
+                    <div class="section-subtitle">Thành tích thi đấu & học thuật</div>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-champion">🥇 Quán quân</span>
+                        <span class="comp-name"><strong>Social Entrepreneurship Preparation Hackathon</strong></span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-champion">🥇 Quán quân</span>
+                        <span class="comp-name"><strong>Cuộc thi Hùng biện đỉnh cao — Calliope 2026</strong></span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-prize">🥉 Giải ba</span>
+                        <span class="comp-name"><strong>Sinh viên NCKH cấp ĐH Kinh tế Quốc dân 2026</strong></span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 6</span>
+                        <span class="comp-name">MAM — Managerial Accounting Mastermind 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 8</span>
+                        <span class="comp-name">Festival Bảo — Ngân Khám Phá 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 10</span>
+                        <span class="comp-name">HR Sandbox 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 15</span>
+                        <span class="comp-name">The REAL Contest 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 15</span>
+                        <span class="comp-name">Tiếng Anh Kinh tế Econova 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 20</span>
+                        <span class="comp-name">Economic Research Champion 2026</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="comp-card">
+                        <span class="comp-rank rank-top">Top 30</span>
+                        <span class="comp-name">Đánh Thức Đam Mê 2025 — Bản Lĩnh Nhà Môi Giới BĐS 4.0</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- ĐẠI SỨ TRUYỀN THÔNG -->
+        <section>
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(120,115,245,0.12);">📣</div>
+                <div>
+                    <div class="section-title">Đại sứ truyền thông</div>
+                    <div class="section-subtitle">Lan tỏa giá trị cộng đồng</div>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card amb-card">
+                    <div class="card-role">INEXT LEADER 2026</div>
+                    <div class="card-org">Leading The Future of Technology</div>
+                </div>
+                <div class="card amb-card">
+                    <div class="card-role">Startup BA 2026</div>
+                </div>
+                <div class="card amb-card">
+                    <div class="card-role">VSIC miền Bắc 2026</div>
+                </div>
+                <div class="card amb-card">
+                    <div class="card-role">Future Student Ambassador Program 2026</div>
+                    <div class="card-org">FSAP</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- TÌNH NGUYỆN -->
+        <section>
+            <div class="section-header">
+                <div class="section-icon" style="background: rgba(52,211,153,0.12);">💚</div>
+                <div>
+                    <div class="section-title">Hoạt động tình nguyện</div>
+                    <div class="section-subtitle">Giấy khen & thành tích cống hiến</div>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card vol-card">
+                    <div class="card-role">Chiến dịch Tình Nguyện Thực Tế 2026</div>
+                    <div class="card-org">Giấy khen của Đoàn xã Xuân Lãng — "Đã có thành tích xuất sắc trong chiến dịch"</div>
+                    <div class="vol-location">📍 Xã Xuân Lãng, tỉnh Phú Thọ</div>
+                </div>
+                <div class="card vol-card">
+                    <div class="card-role">Chiến dịch Tết Ấm Yêu Thương 2025</div>
+                    <div class="card-org">Giấy khen của Đoàn xã Đức Lĩnh — "Đã có thành tích xuất sắc trong chiến dịch"</div>
+                    <div class="vol-location">📍 Xã Đức Lĩnh, huyện Vũ Quang, tỉnh Hà Tĩnh</div>
+                </div>
+                <div class="card vol-card">
+                    <div class="card-role">Chiến dịch Sưởi Ấm Vùng Cao 2025</div>
+                    <div class="card-org">Giấy khen của Đoàn xã Chi Khê — "Đã có thành tích xuất sắc trong chiến dịch"</div>
+                    <div class="vol-location">📍 Xã Chi Khê, huyện Con Cuông, tỉnh Nghệ An</div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 <span class="name-small">Phan Đăng Dương</span> · Đại học Kinh tế Quốc dân</p>
+    </footer>
+
+    <!-- PARTICLES -->
     <script>
         function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-
-            const size = Math.random() * 8 + 3;
-            const colors = ['#ff6ec4', '#7873f5', '#4adede', '#ffd700', '#ff4757'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.background = color;
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.animationDuration = (Math.random() * 5 + 4) + 's';
-            particle.style.animationDelay = (Math.random() * 3) + 's';
-
-            document.body.appendChild(particle);
-            setTimeout(() => particle.remove(), 10000);
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 6 + 2;
+            const colors = ['#ff6ec4','#7873f5','#4adede','#fbbf24','#34d399'];
+            p.style.cssText = `width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}vw;animation-duration:${Math.random()*6+5}s;animation-delay:${Math.random()*3}s`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 12000);
         }
+        setInterval(createParticle, 500);
+        for(let i=0;i<10;i++) setTimeout(createParticle, i*150);
 
-        setInterval(createParticle, 300);
-        for (let i = 0; i < 15; i++) {
-            setTimeout(createParticle, i * 100);
-        }
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if(e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
     </script>
 </body>
 </html>
