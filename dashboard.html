@@ -60,6 +60,8 @@
         /* CARDS */
         .item-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-bottom:.65rem;position:relative;transition:all .2s}
         .item-card:hover{border-color:rgba(120,115,245,.3)}
+        .item-card.is-hidden{opacity:0.45;border-style:dashed;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.02)}
+        .hidden-tag{font-size:.68rem;padding:.15rem .5rem;background:rgba(248,113,113,.15);color:var(--red);border-radius:10px;margin-left:.5rem;font-weight:600;display:inline-block}
         .item-row{display:flex;align-items:center;gap:.75rem}
         .item-content{flex:1;min-width:0}
         .item-title{font-weight:600;font-size:.9rem}
@@ -70,6 +72,8 @@
         .btn-group{display:flex;gap:.4rem;flex-shrink:0}
         .btn-icon{width:32px;height:32px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s}
         .btn-icon:hover{border-color:var(--accent);color:var(--accent);background:rgba(120,115,245,.1)}
+        .btn-icon.active-hide{color:var(--red);border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.1)}
+        .btn-icon.active-hide:hover{background:rgba(248,113,113,.2)}
         .btn-icon.danger:hover{border-color:var(--red);color:var(--red);background:rgba(248,113,113,.1)}
         .btn-add{width:100%;padding:.7rem;border:2px dashed var(--border);border-radius:12px;background:transparent;color:var(--muted);cursor:pointer;font-size:.85rem;transition:all .2s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
         .btn-add:hover{border-color:var(--accent);color:var(--accent)}
@@ -346,12 +350,25 @@ function renderAll() {
     renderClubs(); renderEvents(); renderCompetitions(); renderAmbassadors(); renderVolunteer();
 }
 
+function toggleHide(section, index) {
+    if (!data[section] || !data[section][index]) return;
+    data[section][index].hidden = !data[section][index].hidden;
+    saveData();
+    renderAll();
+    const isNowHidden = data[section][index].hidden;
+    showToast(isNowHidden ? 'Đã ẩn mục này khỏi website!' : 'Đã hiện mục này trên website!', 'success');
+}
+
 function renderClubs() {
     const el = document.getElementById('clubs-list');
     el.innerHTML = data.clubs.map((c, i) => `
-        <div class="item-card"><div class="item-row">
-            <div class="item-content"><div class="item-title">${esc(c.role)}</div><div class="item-sub">${esc(c.org)}</div></div>
+        <div class="item-card ${c.hidden ? 'is-hidden' : ''}"><div class="item-row">
+            <div class="item-content">
+                <div class="item-title">${esc(c.role)}${c.hidden ? '<span class="hidden-tag">Đã ẩn</span>' : ''}</div>
+                <div class="item-sub">${esc(c.org)}</div>
+            </div>
             <div class="btn-group">
+                <button class="btn-icon ${c.hidden ? 'active-hide' : ''}" onclick="toggleHide('clubs',${i})" title="${c.hidden ? 'Bấm để hiển thị lên web' : 'Bấm để ẩn khỏi web'}">${c.hidden ? '🙈' : '👁️'}</button>
                 <button class="btn-icon" onclick="openModal('clubs',${i})" title="Sửa">✏️</button>
                 <button class="btn-icon danger" onclick="deleteItem('clubs',${i})" title="Xóa">🗑️</button>
             </div>
@@ -362,12 +379,15 @@ function renderEvents() {
     const el = document.getElementById('events-list');
     const roleColors = {'Trưởng BTC':'background:rgba(255,110,196,.15);color:#ff6ec4','Phó BTC':'background:rgba(120,115,245,.15);color:#7873f5','Thành viên BTC':'background:rgba(74,222,222,.15);color:#4adede'};
     el.innerHTML = data.events.map((e, i) => `
-        <div class="item-card"><div class="item-row">
+        <div class="item-card ${e.hidden ? 'is-hidden' : ''}"><div class="item-row">
             <span class="item-badge" style="${roleColors[e.role]||roleColors['Thành viên BTC']}">${esc(e.role)}</span>
-            <div class="item-content"><div class="item-title">${esc(e.name)}</div></div>
+            <div class="item-content">
+                <div class="item-title">${esc(e.name)}${e.hidden ? '<span class="hidden-tag">Đã ẩn</span>' : ''}</div>
+            </div>
             <div class="btn-group">
-                <button class="btn-icon" onclick="openModal('events',${i})">✏️</button>
-                <button class="btn-icon danger" onclick="deleteItem('events',${i})">🗑️</button>
+                <button class="btn-icon ${e.hidden ? 'active-hide' : ''}" onclick="toggleHide('events',${i})" title="${e.hidden ? 'Bấm để hiển thị lên web' : 'Bấm để ẩn khỏi web'}">${e.hidden ? '🙈' : '👁️'}</button>
+                <button class="btn-icon" onclick="openModal('events',${i})" title="Sửa">✏️</button>
+                <button class="btn-icon danger" onclick="deleteItem('events',${i})" title="Xóa">🗑️</button>
             </div>
         </div></div>`).join('');
 }
@@ -376,12 +396,15 @@ function renderCompetitions() {
     const el = document.getElementById('competitions-list');
     const rankStyle = r => r.includes('Quán quân')?'background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(251,191,36,.1));color:#fbbf24;border:1px solid rgba(251,191,36,.3)':r.includes('Giải')?'background:rgba(120,115,245,.15);color:#7873f5':'background:rgba(52,211,153,.12);color:#34d399';
     el.innerHTML = data.competitions.map((c, i) => `
-        <div class="item-card"><div class="item-row">
+        <div class="item-card ${c.hidden ? 'is-hidden' : ''}"><div class="item-row">
             <span class="item-badge" style="${rankStyle(c.rank)}">${c.rank.includes('Quán quân')?'🥇 ':c.rank.includes('Giải ba')?'🥉 ':''}${esc(c.rank)}</span>
-            <div class="item-content"><div class="item-title">${esc(c.name)}</div></div>
+            <div class="item-content">
+                <div class="item-title">${esc(c.name)}${c.hidden ? '<span class="hidden-tag">Đã ẩn</span>' : ''}</div>
+            </div>
             <div class="btn-group">
-                <button class="btn-icon" onclick="openModal('competitions',${i})">✏️</button>
-                <button class="btn-icon danger" onclick="deleteItem('competitions',${i})">🗑️</button>
+                <button class="btn-icon ${c.hidden ? 'active-hide' : ''}" onclick="toggleHide('competitions',${i})" title="${c.hidden ? 'Bấm để hiển thị lên web' : 'Bấm để ẩn khỏi web'}">${c.hidden ? '🙈' : '👁️'}</button>
+                <button class="btn-icon" onclick="openModal('competitions',${i})" title="Sửa">✏️</button>
+                <button class="btn-icon danger" onclick="deleteItem('competitions',${i})" title="Xóa">🗑️</button>
             </div>
         </div></div>`).join('');
 }
@@ -389,11 +412,15 @@ function renderCompetitions() {
 function renderAmbassadors() {
     const el = document.getElementById('ambassadors-list');
     el.innerHTML = data.ambassadors.map((a, i) => `
-        <div class="item-card" style="border-left:3px solid var(--accent)"><div class="item-row">
-            <div class="item-content"><div class="item-title">${esc(a.name)}</div>${a.sub?`<div class="item-sub">${esc(a.sub)}</div>`:''}</div>
+        <div class="item-card ${a.hidden ? 'is-hidden' : ''}" style="border-left:3px solid var(--accent)"><div class="item-row">
+            <div class="item-content">
+                <div class="item-title">${esc(a.name)}${a.hidden ? '<span class="hidden-tag">Đã ẩn</span>' : ''}</div>
+                ${a.sub?`<div class="item-sub">${esc(a.sub)}</div>`:''}
+            </div>
             <div class="btn-group">
-                <button class="btn-icon" onclick="openModal('ambassadors',${i})">✏️</button>
-                <button class="btn-icon danger" onclick="deleteItem('ambassadors',${i})">🗑️</button>
+                <button class="btn-icon ${a.hidden ? 'active-hide' : ''}" onclick="toggleHide('ambassadors',${i})" title="${a.hidden ? 'Bấm để hiển thị lên web' : 'Bấm để ẩn khỏi web'}">${a.hidden ? '🙈' : '👁️'}</button>
+                <button class="btn-icon" onclick="openModal('ambassadors',${i})" title="Sửa">✏️</button>
+                <button class="btn-icon danger" onclick="deleteItem('ambassadors',${i})" title="Xóa">🗑️</button>
             </div>
         </div></div>`).join('');
 }
@@ -401,15 +428,16 @@ function renderAmbassadors() {
 function renderVolunteer() {
     const el = document.getElementById('volunteer-list');
     el.innerHTML = data.volunteer.map((v, i) => `
-        <div class="item-card" style="border-left:3px solid var(--green)"><div class="item-row">
+        <div class="item-card ${v.hidden ? 'is-hidden' : ''}" style="border-left:3px solid var(--green)"><div class="item-row">
             <div class="item-content">
-                <div class="item-title">${esc(v.name)}</div>
+                <div class="item-title">${esc(v.name)}${v.hidden ? '<span class="hidden-tag">Đã ẩn</span>' : ''}</div>
                 <div class="item-sub">${esc(v.desc)}</div>
                 <div style="font-size:.78rem;color:var(--green);margin-top:.2rem">📍 ${esc(v.location)}</div>
             </div>
             <div class="btn-group">
-                <button class="btn-icon" onclick="openModal('volunteer',${i})">✏️</button>
-                <button class="btn-icon danger" onclick="deleteItem('volunteer',${i})">🗑️</button>
+                <button class="btn-icon ${v.hidden ? 'active-hide' : ''}" onclick="toggleHide('volunteer',${i})" title="${v.hidden ? 'Bấm để hiển thị lên web' : 'Bấm để ẩn khỏi web'}">${v.hidden ? '🙈' : '👁️'}</button>
+                <button class="btn-icon" onclick="openModal('volunteer',${i})" title="Sửa">✏️</button>
+                <button class="btn-icon danger" onclick="deleteItem('volunteer',${i})" title="Xóa">🗑️</button>
             </div>
         </div></div>`).join('');
 }
@@ -443,6 +471,10 @@ function openModal(section, index = null) {
         }
         html += '</div>';
     });
+    html += `<div class="form-group" style="display:flex;align-items:center;gap:.6rem;margin-top:1.2rem;padding-top:.8rem;border-top:1px solid var(--border)">
+        <input type="checkbox" id="field-hidden" style="width:18px;height:18px;cursor:pointer" ${existing && existing.hidden ? 'checked' : ''}>
+        <label for="field-hidden" style="margin:0;cursor:pointer;text-transform:none;font-size:.88rem;color:var(--text)">Ẩn mục này khỏi website chính thức</label>
+    </div>`;
     html += `<div class="modal-actions"><button class="btn btn-secondary" onclick="closeModal()">Huỷ</button><button class="btn btn-primary" onclick="saveModal()">Lưu</button></div>`;
 
     document.getElementById('modalContent').innerHTML = html;
@@ -463,6 +495,9 @@ function saveModal() {
         obj[f.key] = document.getElementById('field-' + f.key).value.trim();
     });
     if (!obj[fields[0].key]) { showToast('Vui lòng điền thông tin!', 'error'); return; }
+
+    const hiddenBox = document.getElementById('field-hidden');
+    obj.hidden = hiddenBox ? hiddenBox.checked : false;
 
     if (editingIndex !== null) {
         data[editingSection][editingIndex] = obj;
@@ -502,10 +537,12 @@ function saveProfile() {
 // ===== GENERATE HTML =====
 function generateHTML() {
     const p = data.profile;
-    const clubsHTML = data.clubs.map(c => `<div class="card"><div class="card-role">${esc(c.role)}</div><div class="card-org">${esc(c.org)}</div></div>`).join('\n                ');
+    const visibleClubs = (data.clubs || []).filter(c => !c.hidden);
+    const clubsHTML = visibleClubs.map(c => `<div class="card"><div class="card-role">${esc(c.role)}</div><div class="card-org">${esc(c.org)}</div></div>`).join('\n                ');
 
+    const visibleEvents = (data.events || []).filter(e => !e.hidden);
     const eventsByRole = { 'Trưởng BTC': [], 'Phó BTC': [], 'Thành viên BTC': [] };
-    data.events.forEach(e => { (eventsByRole[e.role] = eventsByRole[e.role] || []).push(e); });
+    visibleEvents.forEach(e => { (eventsByRole[e.role] = eventsByRole[e.role] || []).push(e); });
     const badgeClass = { 'Trưởng BTC': 'badge-lead', 'Phó BTC': 'badge-vice', 'Thành viên BTC': 'badge-member' };
     const roleEmoji = { 'Trưởng BTC': '🔥 Trưởng Ban Tổ Chức', 'Phó BTC': '⚡ Phó Ban Tổ Chức', 'Thành viên BTC': '👥 Thành viên Ban Tổ Chức' };
 
@@ -519,7 +556,8 @@ function generateHTML() {
         eventsHTML += `            </div>\n`;
     }
 
-    const compHTML = data.competitions.map(c => {
+    const visibleComp = (data.competitions || []).filter(c => !c.hidden);
+    const compHTML = visibleComp.map(c => {
         const isChamp = c.rank.includes('Quán quân');
         const isPrize = c.rank.includes('Giải');
         const cls = isChamp ? 'rank-champion' : isPrize ? 'rank-prize' : 'rank-top';
@@ -528,13 +566,68 @@ function generateHTML() {
         return `<div class="card"><div class="comp-card"><span class="comp-rank ${cls}">${emoji}${esc(c.rank)}</span><span class="comp-name">${bold}</span></div></div>`;
     }).join('\n                ');
 
-    const ambHTML = data.ambassadors.map(a =>
+    const visibleAmb = (data.ambassadors || []).filter(a => !a.hidden);
+    const ambHTML = visibleAmb.map(a =>
         `<div class="card amb-card"><div class="card-role">${esc(a.name)}</div>${a.sub ? `<div class="card-org">${esc(a.sub)}</div>` : ''}</div>`
     ).join('\n                ');
 
-    const volHTML = data.volunteer.map(v =>
+    const visibleVol = (data.volunteer || []).filter(v => !v.hidden);
+    const volHTML = visibleVol.map(v =>
         `<div class="card vol-card"><div class="card-role">${esc(v.name)}</div><div class="card-org">${esc(v.desc)}</div><div class="vol-location">📍 ${esc(v.location)}</div></div>`
     ).join('\n                ');
+
+    let bodySections = '';
+    if (visibleClubs.length > 0) {
+        bodySections += `
+        <section>
+            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">🏛️</div><div><div class="section-title">Câu lạc bộ & Tổ chức</div><div class="section-subtitle">Hoạt động đoàn thể tại NEU</div></div></div>
+            <div class="card-grid">
+                ${clubsHTML}
+            </div>
+        </section>
+        <div class="divider"></div>`;
+    }
+
+    if (visibleEvents.length > 0) {
+        bodySections += `
+        <section>
+            <div class="section-header"><div class="section-icon" style="background:rgba(255,110,196,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo & thành viên BTC</div></div></div>
+            ${eventsHTML}
+        </section>
+        <div class="divider"></div>`;
+    }
+
+    if (visibleComp.length > 0) {
+        bodySections += `
+        <section>
+            <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,.12)">🏆</div><div><div class="section-title">Các cuộc thi</div><div class="section-subtitle">Thành tích thi đấu & học thuật</div></div></div>
+            <div class="card-grid">
+                ${compHTML}
+            </div>
+        </section>
+        <div class="divider"></div>`;
+    }
+
+    if (visibleAmb.length > 0) {
+        bodySections += `
+        <section>
+            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">📣</div><div><div class="section-title">Đại sứ truyền thông</div><div class="section-subtitle">Lan tỏa giá trị cộng đồng</div></div></div>
+            <div class="card-grid">
+                ${ambHTML}
+            </div>
+        </section>
+        <div class="divider"></div>`;
+    }
+
+    if (visibleVol.length > 0) {
+        bodySections += `
+        <section>
+            <div class="section-header"><div class="section-icon" style="background:rgba(52,211,153,.12)">💚</div><div><div class="section-title">Hoạt động tình nguyện</div><div class="section-subtitle">Giấy khen & thành tích cống hiến</div></div></div>
+            <div class="card-grid">
+                ${volHTML}
+            </div>
+        </section>`;
+    }
 
     return `<!DOCTYPE html>
 <html lang="vi">
@@ -604,38 +697,7 @@ function generateHTML() {
         <div class="scroll-hint">↓</div>
     </section>
     <div class="container">
-        <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">🏛️</div><div><div class="section-title">Câu lạc bộ & Tổ chức</div><div class="section-subtitle">Hoạt động đoàn thể tại NEU</div></div></div>
-            <div class="card-grid">
-                ${clubsHTML}
-            </div>
-        </section>
-        <div class="divider"></div>
-        <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(255,110,196,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo & thành viên BTC</div></div></div>
-            ${eventsHTML}
-        </section>
-        <div class="divider"></div>
-        <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,.12)">🏆</div><div><div class="section-title">Các cuộc thi</div><div class="section-subtitle">Thành tích thi đấu & học thuật</div></div></div>
-            <div class="card-grid">
-                ${compHTML}
-            </div>
-        </section>
-        <div class="divider"></div>
-        <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">📣</div><div><div class="section-title">Đại sứ truyền thông</div><div class="section-subtitle">Lan tỏa giá trị cộng đồng</div></div></div>
-            <div class="card-grid">
-                ${ambHTML}
-            </div>
-        </section>
-        <div class="divider"></div>
-        <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(52,211,153,.12)">💚</div><div><div class="section-title">Hoạt động tình nguyện</div><div class="section-subtitle">Giấy khen & thành tích cống hiến</div></div></div>
-            <div class="card-grid">
-                ${volHTML}
-            </div>
-        </section>
+        ${bodySections}
     </div>
     <footer><p>© 2026 <span class="name-small">${esc(p.name)}</span> · Đại học Kinh tế Quốc dân</p></footer>
     <script>
