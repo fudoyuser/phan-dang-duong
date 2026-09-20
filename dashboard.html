@@ -111,16 +111,26 @@
         @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 
         /* RESPONSIVE */
-        @media(max-width:768px){.sidebar{display:none}.main{margin-left:0;padding:1rem}}
+        @media(max-width:768px){
+            .app{flex-direction:column}
+            .sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:1rem 0}
+            .sidebar-brand{display:flex;justify-content:space-between;align-items:center;padding:0 1rem;margin-bottom:1rem}
+            .sidebar-nav{display:flex;flex-wrap:wrap;gap:0.3rem;padding:0 0.5rem}
+            .nav-item{padding:0.5rem 0.8rem;border-left:none;border-radius:8px;font-size:0.8rem}
+            .nav-item.active{border-left:none;background:rgba(120,115,245,0.2)}
+            .nav-divider{display:none}
+            .deploy-section{padding:0.75rem 1rem}
+            .main{margin-left:0;padding:1.5rem 1rem}
+        }
     </style>
 </head>
 <body>
     <!-- LOGIN SCREEN -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
-            <h2>🔒 Dashboard</h2>
-            <p>Nhập mật khẩu để truy cập quản trị</p>
-            <input type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+            <h2>🔒 Dashboard Quản Trị</h2>
+            <p>Nhập mật khẩu để truy cập chỉnh sửa</p>
+            <input type="password" id="loginPassword" placeholder="Nhập mật khẩu..." onkeydown="if(event.key==='Enter')doLogin()">
             <button onclick="doLogin()">Đăng nhập</button>
             <div class="login-error" id="loginError"></div>
         </div>
@@ -130,19 +140,27 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <h2>📊 Dashboard</h2>
-                <p>Phan Đăng Dương</p>
+                <div>
+                    <h2>📊 Dashboard</h2>
+                    <p>Phan Đăng Dương</p>
+                </div>
+                <button onclick="doLogout()" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:0.25rem 0.6rem;font-size:0.75rem;cursor:pointer">Đăng xuất</button>
             </div>
-            <div class="nav-item active" data-panel="clubs"><span class="nav-icon">🏛️</span>CLB & Tổ chức</div>
-            <div class="nav-item" data-panel="events"><span class="nav-icon">🎤</span>Sự kiện</div>
-            <div class="nav-item" data-panel="competitions"><span class="nav-icon">🏆</span>Cuộc thi</div>
-            <div class="nav-item" data-panel="ambassadors"><span class="nav-icon">📣</span>Đại sứ truyền thông</div>
-            <div class="nav-item" data-panel="volunteer"><span class="nav-icon">💚</span>Tình nguyện</div>
-            <div class="nav-divider"></div>
-            <div class="nav-item" data-panel="settings"><span class="nav-icon">⚙️</span>Cài đặt</div>
-            <div class="nav-item" data-panel="preview"><span class="nav-icon">👁️</span>Xem trước</div>
+            <div class="sidebar-nav">
+                <div class="nav-item active" data-panel="clubs"><span class="nav-icon">🏛️</span>CLB & Tổ chức</div>
+                <div class="nav-item" data-panel="events"><span class="nav-icon">🎤</span>Sự kiện</div>
+                <div class="nav-item" data-panel="competitions"><span class="nav-icon">🏆</span>Cuộc thi</div>
+                <div class="nav-item" data-panel="ambassadors"><span class="nav-icon">📣</span>Đại sứ</div>
+                <div class="nav-item" data-panel="volunteer"><span class="nav-icon">💚</span>Tình nguyện</div>
+                <div class="nav-divider"></div>
+                <div class="nav-item" data-panel="settings"><span class="nav-icon">⚙️</span>Cài đặt Token</div>
+                <div class="nav-item" data-panel="preview"><span class="nav-icon">👁️</span>Xem trước</div>
+            </div>
             <div class="deploy-section">
                 <button class="btn-deploy" id="deployBtn" onclick="deployToGitHub()">🚀 Deploy lên GitHub</button>
+                <div class="deploy-status" id="deployStatus"></div>
+            </div>
+        </aside>
                 <div class="deploy-status" id="deployStatus"></div>
             </div>
         </aside>
@@ -630,7 +648,12 @@ async function deployToGitHub() {
     const status = document.getElementById('deployStatus');
 
     if (!token) {
-        showToast('Vui lòng thêm GitHub Token trong Cài đặt!', 'error');
+        showToast('Vui lòng nhập GitHub Token trong Cài đặt để Deploy!', 'error');
+        document.querySelector('[data-panel="settings"]')?.click();
+        document.getElementById('ghToken')?.focus();
+        btn.disabled = false;
+        btn.innerHTML = '🚀 Deploy lên GitHub';
+        status.textContent = 'Chưa cài đặt GitHub Token';
         return;
     }
 
@@ -688,37 +711,54 @@ document.getElementById('modalOverlay').addEventListener('click', e => { if (e.t
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ===== AUTH =====
-// Default password: duong2026 (SHA-256 hash)
-const DEFAULT_HASH = '8a5edab119e0a07cd3ef7968b52e3fe371c6fa7254e13b4545b69db044764a48';
+const VALID_PASSWORDS = ['duong2026', 'admin'];
 
-async function hashPassword(pw) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+function doLogin() {
+    const input = document.getElementById('loginPassword');
+    const pw = (input.value || '').trim();
+    const customPw = localStorage.getItem('dashboard_custom_pw');
+
+    if (VALID_PASSWORDS.includes(pw) || (customPw && pw === customPw)) {
+        localStorage.setItem('dashboard_auth', 'true');
+        const screen = document.getElementById('loginScreen');
+        if (screen) screen.style.display = 'none';
+        const app = document.getElementById('appMain');
+        if (app) app.style.display = 'flex';
+        renderAll();
+        loadSettings();
+    } else {
+        const err = document.getElementById('loginError');
+        if (err) err.textContent = 'Mật khẩu chưa đúng! Mật khẩu là: duong2026';
+        input.value = '';
+        input.focus();
+    }
 }
 
-async function doLogin() {
-    const pw = document.getElementById('loginPassword').value;
-    const hash = await hashPassword(pw);
-    const stored = localStorage.getItem('dashboard_pw_hash') || DEFAULT_HASH;
-
-    if (hash === stored) {
-        localStorage.setItem('dashboard_auth', 'true');
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('appMain').style.display = 'flex';
-        renderAll();
-    } else {
-        document.getElementById('loginError').textContent = 'Sai mật khẩu!';
-        document.getElementById('loginPassword').value = '';
-    }
+function doLogout() {
+    localStorage.removeItem('dashboard_auth');
+    const screen = document.getElementById('loginScreen');
+    if (screen) screen.style.display = 'flex';
+    const app = document.getElementById('appMain');
+    if (app) app.style.display = 'none';
+    const input = document.getElementById('loginPassword');
+    if (input) { input.value = ''; input.focus(); }
+    const err = document.getElementById('loginError');
+    if (err) err.textContent = '';
 }
 
 // Auto-login if session active
 if (localStorage.getItem('dashboard_auth') === 'true') {
-    document.getElementById('loginScreen').classList.add('hidden');
-    document.getElementById('appMain').style.display = 'flex';
+    const screen = document.getElementById('loginScreen');
+    if (screen) screen.style.display = 'none';
+    const app = document.getElementById('appMain');
+    if (app) app.style.display = 'flex';
     renderAll();
+    loadSettings();
 } else {
-    document.getElementById('loginPassword').focus();
+    setTimeout(() => {
+        const input = document.getElementById('loginPassword');
+        if (input) input.focus();
+    }, 100);
 }</script>
 </body>
 </html>
