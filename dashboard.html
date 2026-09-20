@@ -161,9 +161,6 @@
                 <div class="deploy-status" id="deployStatus"></div>
             </div>
         </aside>
-                <div class="deploy-status" id="deployStatus"></div>
-            </div>
-        </aside>
 
         <!-- MAIN -->
         <div class="main">
@@ -305,7 +302,25 @@ const DEFAULT_DATA = {
     ]
 };
 
-let data = JSON.parse(localStorage.getItem('portfolio_data')) || JSON.parse(JSON.stringify(DEFAULT_DATA));
+function getSafeData() {
+    let saved = null;
+    try {
+        const raw = localStorage.getItem('portfolio_data');
+        if (raw) saved = JSON.parse(raw);
+    } catch(e) {}
+    if (!saved || typeof saved !== 'object' || !Array.isArray(saved.clubs) || saved.clubs.length === 0) {
+        return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+    for (let k of ['clubs','events','competitions','ambassadors','volunteer']) {
+        if (!Array.isArray(saved[k]) || saved[k].length === 0) {
+            saved[k] = JSON.parse(JSON.stringify(DEFAULT_DATA[k] || []));
+        }
+    }
+    if (!saved.profile) saved.profile = JSON.parse(JSON.stringify(DEFAULT_DATA.profile));
+    return saved;
+}
+
+let data = getSafeData();
 let editingSection = null;
 let editingIndex = null;
 
