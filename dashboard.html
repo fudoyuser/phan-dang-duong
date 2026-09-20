@@ -628,7 +628,7 @@ function generateHTML() {
         setInterval(createParticle,500);for(let i=0;i<10;i++)setTimeout(createParticle,i*150);
         const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}})},{threshold:.1});
         document.querySelectorAll('.card').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(20px)';c.style.transition='all .5s ease';obs.observe(c)});
-    </script>
+    <\/script>
 </body>
 </html>`;
 }
