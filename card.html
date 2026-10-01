@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phan Đăng Dương</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a1a;
+            color: #e4e4e7;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(120,115,245,0.15), transparent 70%);
+            top: -200px; right: -100px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(255,110,196,0.1), transparent 70%);
+            bottom: -150px; left: -100px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: #a1a1aa;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .name {
+            font-size: clamp(2.5rem, 9vw, 5.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6ec4, #7873f5, #4adede);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 4s ease infinite;
+            background-size: 200% 200%;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.15rem;
+            color: #a1a1aa;
+        }
+
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            animation: float-up linear forwards;
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes float-up {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.7; }
+            90%  { opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-content">
+        <p class="greeting">Xin chào, tôi là</p>
+        <h1 class="name">Phan Đăng Dương</h1>
+        <p class="tagline">Sinh viên Đại học Kinh tế Quốc dân</p>
+    </div>
+
+    <script>
+        function createParticle() {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            const size = Math.random() * 6 + 2;
+            const colors = ['#ff6ec4','#7873f5','#4adede','#fbbf24','#34d399'];
+            p.style.cssText = `width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}vw;animation-duration:${Math.random()*6+5}s;animation-delay:${Math.random()*3}s`;
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 12000);
+        }
+        setInterval(createParticle, 500);
+        for(let i = 0; i < 15; i++) setTimeout(createParticle, i * 150);
+    </script>
+</body>
+</html>
