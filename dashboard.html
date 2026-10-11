@@ -273,14 +273,7 @@ const DEFAULT_DATA = {
         { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Data\"" },
         { role: "Trưởng BTC", name: "Webinar: \"Road To Case Champion — Hành Trình Chinh Phục Giải Case\"" },
         { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Marketing\"" },
-        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Sales\"" },
-        { role: "Thành viên BTC", name: "Talkshow: \"Chạm Data — Mở lối vươn xa\"" },
-        { role: "Thành viên BTC", name: "Tuần nghề nghiệp và việc làm — NEU Career Week 2026" },
-        { role: "Thành viên BTC", name: "Talkshow: \"Chromatique: Tích tạo kỳ tích — Bewitch your brand\"" },
-        { role: "Thành viên BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Kế Toán\"" },
-        { role: "Thành viên BTC", name: "Webinar: \"Your Science Story — Khi Nghiên cứu Khoa học là câu chuyện của chính bạn\"" },
-        { role: "Thành viên BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Nhân sự\"" },
-        { role: "Thành viên BTC", name: "Talkshow: \"Công cụ định lượng — Từ giảng đường đến thực tiễn\"" }
+        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Sales\"" }
     ],
     competitions: [
         { rank: "Quán quân", name: "Social Entrepreneurship Preparation Hackathon" },
@@ -301,11 +294,7 @@ const DEFAULT_DATA = {
         { name: "VSIC miền Bắc 2026", sub: "" },
         { name: "Future Student Ambassador Program 2026", sub: "FSAP" }
     ],
-    volunteer: [
-        { name: "Chiến dịch Tình Nguyện Thực Tế 2026", desc: "Giấy khen của Đoàn xã Xuân Lãng — \"Đã có thành tích xuất sắc trong chiến dịch\"", location: "Xã Xuân Lãng, tỉnh Phú Thọ" },
-        { name: "Chiến dịch Tết Ấm Yêu Thương 2025", desc: "Giấy khen của Đoàn xã Đức Lĩnh — \"Đã có thành tích xuất sắc trong chiến dịch\"", location: "Xã Đức Lĩnh, huyện Vũ Quang, tỉnh Hà Tĩnh" },
-        { name: "Chiến dịch Sưởi Ấm Vùng Cao 2025", desc: "Giấy khen của Đoàn xã Chi Khê — \"Đã có thành tích xuất sắc trong chiến dịch\"", location: "Xã Chi Khê, huyện Con Cuông, tỉnh Nghệ An" }
-    ]
+    volunteer: []
 };
 
 function getSafeData() {
@@ -593,7 +582,7 @@ function generateHTML() {
     if (visibleEvents.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(255,110,196,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo & thành viên BTC</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(255,110,196,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo Ban Tổ chức</div></div></div>
             ${eventsHTML}
         </section>
         <div class="divider"></div>`;
