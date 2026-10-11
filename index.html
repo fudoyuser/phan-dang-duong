@@ -11,17 +11,17 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #0a0a1a;
-            --card-bg: rgba(255,255,255,0.04);
-            --card-border: rgba(255,255,255,0.08);
-            --text: #e4e4e7;
-            --text-muted: #a1a1aa;
-            --accent-pink: #ff6ec4;
-            --accent-purple: #7873f5;
-            --accent-cyan: #4adede;
-            --accent-gold: #fbbf24;
-            --accent-green: #34d399;
-            --accent-red: #f87171;
+            --bg: #fff8f2;
+            --card-bg: #ffffff;
+            --card-border: #f3e3d6;
+            --text: #2b1d14;
+            --text-muted: #75604f;
+            --accent-pink: #e11d48;
+            --accent-purple: #c2410c;
+            --accent-cyan: #0f766e;
+            --accent-gold: #a16207;
+            --accent-green: #15803d;
+            --accent-red: #dc2626;
         }
 
         body {
@@ -47,7 +47,7 @@
             content: '';
             position: absolute;
             width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(120,115,245,0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(249,115,22,0.15), transparent 70%);
             top: -200px; right: -100px;
             border-radius: 50%;
         }
@@ -56,7 +56,7 @@
             content: '';
             position: absolute;
             width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(255,110,196,0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(225,29,72,0.1), transparent 70%);
             bottom: -150px; left: -100px;
             border-radius: 50%;
         }
@@ -77,7 +77,7 @@
         .name {
             font-size: clamp(2.5rem, 7vw, 5rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #ff6ec4, #7873f5, #4adede);
+            background: linear-gradient(135deg, #f97316, #e11d48, #be185d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -167,8 +167,8 @@
         }
 
         .card:hover {
-            border-color: rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.06);
+            border-color: #f9b98f;
+            background: #ffffff;
             transform: translateY(-2px);
         }
 
@@ -202,9 +202,9 @@
             letter-spacing: 0.5px;
         }
 
-        .badge-lead { background: rgba(255,110,196,0.15); color: var(--accent-pink); }
-        .badge-vice { background: rgba(120,115,245,0.15); color: var(--accent-purple); }
-        .badge-member { background: rgba(74,222,222,0.15); color: var(--accent-cyan); }
+        .badge-lead { background: rgba(225,29,72,0.15); color: var(--accent-pink); }
+        .badge-vice { background: rgba(249,115,22,0.15); color: var(--accent-purple); }
+        .badge-member { background: rgba(15,118,110,0.15); color: var(--accent-cyan); }
 
         /* ===== COMPETITION CARDS ===== */
         .comp-card {
@@ -224,9 +224,9 @@
             letter-spacing: 0.5px;
         }
 
-        .rank-champion { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.1)); color: var(--accent-gold); border: 1px solid rgba(251,191,36,0.3); }
-        .rank-top { background: rgba(52,211,153,0.12); color: var(--accent-green); }
-        .rank-prize { background: rgba(120,115,245,0.15); color: var(--accent-purple); }
+        .rank-champion { background: linear-gradient(135deg, rgba(217,119,6,0.2), rgba(217,119,6,0.1)); color: var(--accent-gold); border: 1px solid rgba(217,119,6,0.3); }
+        .rank-top { background: rgba(21,128,61,0.12); color: var(--accent-green); }
+        .rank-prize { background: rgba(249,115,22,0.15); color: var(--accent-purple); }
 
         .comp-name {
             font-size: 0.9rem;
@@ -282,7 +282,7 @@
         }
 
         footer .name-small {
-            background: linear-gradient(135deg, #ff6ec4, #7873f5);
+            background: linear-gradient(135deg, #f97316, #e11d48);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -313,6 +313,7 @@
             .event-card { flex-direction: column; gap: 0.4rem; }
             .comp-card { flex-direction: column; gap: 0.4rem; align-items: flex-start; }
         }
+        .card{box-shadow:0 1px 2px rgba(43,29,20,.04),0 4px 14px rgba(43,29,20,.05)}.card:hover{box-shadow:0 8px 24px rgba(43,29,20,.10)}
     </style>
 </head>
 <body>
@@ -330,7 +331,7 @@
         <!-- CLB & TỔ CHỨC -->
         <section>
             <div class="section-header">
-                <div class="section-icon" style="background: rgba(120,115,245,0.12);">🏛️</div>
+                <div class="section-icon" style="background: rgba(249,115,22,0.12);">🏛️</div>
                 <div>
                     <div class="section-title">Câu lạc bộ & Tổ chức</div>
                     <div class="section-subtitle">Hoạt động đoàn thể tại NEU</div>
@@ -357,7 +358,7 @@
         <!-- SỰ KIỆN -->
         <section>
             <div class="section-header">
-                <div class="section-icon" style="background: rgba(255,110,196,0.12);">🎤</div>
+                <div class="section-icon" style="background: rgba(225,29,72,0.12);">🎤</div>
                 <div>
                     <div class="section-title">Sự kiện đã tổ chức</div>
                     <div class="section-subtitle">Vai trò lãnh đạo Ban Tổ chức</div>
@@ -426,7 +427,7 @@
         <!-- CUỘC THI -->
         <section>
             <div class="section-header">
-                <div class="section-icon" style="background: rgba(251,191,36,0.12);">🏆</div>
+                <div class="section-icon" style="background: rgba(217,119,6,0.12);">🏆</div>
                 <div>
                     <div class="section-title">Các cuộc thi</div>
                     <div class="section-subtitle">Thành tích thi đấu & học thuật</div>
@@ -507,15 +508,15 @@
         <!-- HỌC THUẬT -->
         <section>
             <div class="section-header">
-                <div class="section-icon" style="background: rgba(56,189,248,0.12);">📝</div>
+                <div class="section-icon" style="background: rgba(3,105,161,0.12);">📝</div>
                 <div>
                     <div class="section-title">Nghiên cứu & Học thuật</div>
                     <div class="section-subtitle">Công bố khoa học quốc tế</div>
                 </div>
             </div>
             <div class="card-grid">
-                <div class="card" style="border-left: 3px solid #38bdf8; padding-left: 1.2rem !important;">
-                    <div class="card-role" style="color: #38bdf8;">Đồng tác giả · Hội thảo Quốc tế ICFAA 2026</div>
+                <div class="card" style="border-left: 3px solid #0369a1; padding-left: 1.2rem !important;">
+                    <div class="card-role" style="color: #0369a1;">Đồng tác giả · Hội thảo Quốc tế ICFAA 2026</div>
                     <div class="card-org" style="margin-top: 0.3rem;">International Conference on Finance, Accounting and Auditing (ICFAA) 2026</div>
                 </div>
             </div>
@@ -526,7 +527,7 @@
         <!-- ĐẠI SỨ TRUYỀN THÔNG -->
         <section>
             <div class="section-header">
-                <div class="section-icon" style="background: rgba(120,115,245,0.12);">📣</div>
+                <div class="section-icon" style="background: rgba(249,115,22,0.12);">📣</div>
                 <div>
                     <div class="section-title">Đại sứ truyền thông</div>
                     <div class="section-subtitle">Lan tỏa giá trị cộng đồng</div>
@@ -568,7 +569,7 @@
             const p = document.createElement('div');
             p.classList.add('particle');
             const size = Math.random() * 6 + 2;
-            const colors = ['#ff6ec4','#7873f5','#4adede','#fbbf24','#34d399'];
+            const colors = ['#e11d48','#c2410c','#0f766e','#a16207','#15803d'];
             p.style.cssText = `width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}vw;animation-duration:${Math.random()*6+5}s;animation-delay:${Math.random()*3}s`;
             document.body.appendChild(p);
             setTimeout(() => p.remove(), 12000);

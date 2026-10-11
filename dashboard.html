@@ -568,7 +568,7 @@ function generateHTML() {
     if (visibleClubs.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">🏛️</div><div><div class="section-title">Câu lạc bộ & Tổ chức</div><div class="section-subtitle">Hoạt động đoàn thể tại NEU</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(249,115,22,.12)">🏛️</div><div><div class="section-title">Câu lạc bộ & Tổ chức</div><div class="section-subtitle">Hoạt động đoàn thể tại NEU</div></div></div>
             <div class="card-grid">
                 ${clubsHTML}
             </div>
@@ -579,7 +579,7 @@ function generateHTML() {
     if (visibleEvents.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(255,110,196,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo Ban Tổ chức</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(225,29,72,.12)">🎤</div><div><div class="section-title">Sự kiện đã tổ chức</div><div class="section-subtitle">Vai trò lãnh đạo Ban Tổ chức</div></div></div>
             ${eventsHTML}
         </section>
         <div class="divider"></div>`;
@@ -588,7 +588,7 @@ function generateHTML() {
     if (visibleComp.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(251,191,36,.12)">🏆</div><div><div class="section-title">Các cuộc thi</div><div class="section-subtitle">Thành tích thi đấu & học thuật</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(217,119,6,.12)">🏆</div><div><div class="section-title">Các cuộc thi</div><div class="section-subtitle">Thành tích thi đấu & học thuật</div></div></div>
             <div class="card-grid">
                 ${compHTML}
             </div>
@@ -599,7 +599,7 @@ function generateHTML() {
     if (visibleAmb.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(120,115,245,.12)">📣</div><div><div class="section-title">Đại sứ truyền thông</div><div class="section-subtitle">Lan tỏa giá trị cộng đồng</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(249,115,22,.12)">📣</div><div><div class="section-title">Đại sứ truyền thông</div><div class="section-subtitle">Lan tỏa giá trị cộng đồng</div></div></div>
             <div class="card-grid">
                 ${ambHTML}
             </div>
@@ -610,7 +610,7 @@ function generateHTML() {
     if (visibleVol.length > 0) {
         bodySections += `
         <section>
-            <div class="section-header"><div class="section-icon" style="background:rgba(52,211,153,.12)">💚</div><div><div class="section-title">Hoạt động tình nguyện</div><div class="section-subtitle">Giấy khen & thành tích cống hiến</div></div></div>
+            <div class="section-header"><div class="section-icon" style="background:rgba(21,128,61,.12)">💚</div><div><div class="section-title">Hoạt động tình nguyện</div><div class="section-subtitle">Giấy khen & thành tích cống hiến</div></div></div>
             <div class="card-grid">
                 ${volHTML}
             </div>
@@ -628,14 +628,14 @@ function generateHTML() {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0a1a;--card-bg:rgba(255,255,255,0.04);--card-border:rgba(255,255,255,0.08);--text:#e4e4e7;--text-muted:#a1a1aa;--accent-pink:#ff6ec4;--accent-purple:#7873f5;--accent-cyan:#4adede;--accent-gold:#fbbf24;--accent-green:#34d399;--accent-red:#f87171}
+        :root{--bg:#fff8f2;--card-bg:#ffffff;--card-border:#f3e3d6;--text:#2b1d14;--text-muted:#75604f;--accent-pink:#e11d48;--accent-purple:#c2410c;--accent-cyan:#0f766e;--accent-gold:#a16207;--accent-green:#15803d;--accent-red:#dc2626}
         body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden}
         .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-        .hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(120,115,245,.15),transparent 70%);top:-200px;right:-100px;border-radius:50%}
-        .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(255,110,196,.1),transparent 70%);bottom:-150px;left:-100px;border-radius:50%}
+        .hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(249,115,22,.15),transparent 70%);top:-200px;right:-100px;border-radius:50%}
+        .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(225,29,72,.1),transparent 70%);bottom:-150px;left:-100px;border-radius:50%}
         .hero-content{text-align:center;z-index:1}
         .greeting{font-size:1.1rem;color:var(--text-muted);margin-bottom:.5rem;letter-spacing:2px;text-transform:uppercase}
-        .name{font-size:clamp(2.5rem,7vw,5rem);font-weight:900;background:linear-gradient(135deg,#ff6ec4,#7873f5,#4adede);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 4s ease infinite;background-size:200% 200%;margin-bottom:1rem}
+        .name{font-size:clamp(2.5rem,7vw,5rem);font-weight:900;background:linear-gradient(135deg,#f97316,#e11d48,#be185d);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 4s ease infinite;background-size:200% 200%;margin-bottom:1rem}
         @keyframes gradient-shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .tagline{font-size:1.15rem;color:var(--text-muted);max-width:500px;margin:0 auto}
         .scroll-hint{position:absolute;bottom:2rem;animation:bounce 2s infinite;color:var(--text-muted);font-size:1.5rem}
@@ -648,19 +648,19 @@ function generateHTML() {
         .section-subtitle{font-size:.85rem;color:var(--text-muted)}
         .card-grid{display:grid;gap:.75rem}
         .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:1.1rem 1.3rem;transition:all .3s;position:relative;overflow:hidden}
-        .card:hover{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.06);transform:translateY(-2px)}
+        .card:hover{border-color:#f9b98f;background:#ffffff;transform:translateY(-2px)}
         .card-role{font-weight:700;font-size:.95rem;margin-bottom:.25rem}
         .card-org{font-size:.85rem;color:var(--text-muted)}
         .event-card{display:flex;align-items:flex-start;gap:1rem}
         .event-badge{padding:.25rem .7rem;border-radius:20px;font-size:.7rem;font-weight:700;white-space:nowrap;flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-        .badge-lead{background:rgba(255,110,196,.15);color:var(--accent-pink)}
-        .badge-vice{background:rgba(120,115,245,.15);color:var(--accent-purple)}
-        .badge-member{background:rgba(74,222,222,.15);color:var(--accent-cyan)}
+        .badge-lead{background:rgba(225,29,72,.15);color:var(--accent-pink)}
+        .badge-vice{background:rgba(249,115,22,.15);color:var(--accent-purple)}
+        .badge-member{background:rgba(15,118,110,.15);color:var(--accent-cyan)}
         .comp-card{display:flex;align-items:center;gap:1rem}
         .comp-rank{padding:.3rem .8rem;border-radius:20px;font-size:.72rem;font-weight:800;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:.5px}
-        .rank-champion{background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(251,191,36,.1));color:var(--accent-gold);border:1px solid rgba(251,191,36,.3)}
-        .rank-top{background:rgba(52,211,153,.12);color:var(--accent-green)}
-        .rank-prize{background:rgba(120,115,245,.15);color:var(--accent-purple)}
+        .rank-champion{background:linear-gradient(135deg,rgba(217,119,6,.2),rgba(217,119,6,.1));color:var(--accent-gold);border:1px solid rgba(217,119,6,.3)}
+        .rank-top{background:rgba(21,128,61,.12);color:var(--accent-green)}
+        .rank-prize{background:rgba(249,115,22,.15);color:var(--accent-purple)}
         .comp-name{font-size:.9rem}
         .amb-card{border-left:3px solid var(--accent-purple);padding-left:1.2rem!important}
         .vol-card{border-left:3px solid var(--accent-green);padding-left:1.2rem!important}
@@ -669,10 +669,11 @@ function generateHTML() {
         .sub-heading{font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:1rem;margin-top:1.5rem}
         .sub-heading:first-child{margin-top:0}
         footer{text-align:center;padding:3rem 1.5rem;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--card-border)}
-        footer .name-small{background:linear-gradient(135deg,#ff6ec4,#7873f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
+        footer .name-small{background:linear-gradient(135deg,#f97316,#e11d48);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700}
         .particle{position:fixed;border-radius:50%;pointer-events:none;animation:float-up linear infinite;opacity:.4;z-index:0}
         @keyframes float-up{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.4}90%{opacity:.4}100%{transform:translateY(-10vh) scale(1);opacity:0}}
         @media(max-width:600px){.section-title{font-size:1.3rem}.card{padding:1rem}.event-card,.comp-card{flex-direction:column;gap:.4rem}.comp-card{align-items:flex-start}}
+        .card{box-shadow:0 1px 2px rgba(43,29,20,.04),0 4px 14px rgba(43,29,20,.05)}.card:hover{box-shadow:0 8px 24px rgba(43,29,20,.10)}
     </style>
 </head>
 <body>
@@ -688,7 +689,7 @@ function generateHTML() {
     </div>
     <footer><p>© 2026 <span class="name-small">${esc(p.name)}</span> · Đại học Kinh tế Quốc dân</p></footer>
     <script>
-        function createParticle(){const p=document.createElement('div');p.classList.add('particle');const s=Math.random()*6+2;const c=['#ff6ec4','#7873f5','#4adede','#fbbf24','#34d399'];p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+c[Math.floor(Math.random()*c.length)]+';left:'+Math.random()*100+'vw;animation-duration:'+(Math.random()*6+5)+'s;animation-delay:'+Math.random()*3+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),12000)}
+        function createParticle(){const p=document.createElement('div');p.classList.add('particle');const s=Math.random()*6+2;const c=['#e11d48','#c2410c','#0f766e','#a16207','#15803d'];p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+c[Math.floor(Math.random()*c.length)]+';left:'+Math.random()*100+'vw;animation-duration:'+(Math.random()*6+5)+'s;animation-delay:'+Math.random()*3+'s';document.body.appendChild(p);setTimeout(()=>p.remove(),12000)}
         setInterval(createParticle,500);for(let i=0;i<10;i++)setTimeout(createParticle,i*150);
         const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}})},{threshold:.1});
         document.querySelectorAll('.card').forEach(c=>{c.style.opacity='0';c.style.transform='translateY(20px)';c.style.transition='all .5s ease';obs.observe(c)});
