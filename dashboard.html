@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — Phan Đăng Dương</title>
+    <title>Dashboard - Phan Đăng Dương</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -259,33 +259,33 @@
 const DEFAULT_DATA = {
     profile: { name: "Phan Đăng Dương", tagline: "Sinh viên Đại học Kinh tế Quốc dân" },
     clubs: [
-        { role: "Chủ nhiệm", org: "CLB Phát triển Nghề nghiệp ĐH KTQD — NEU Career Path Club Gen 2" },
-        { role: "Thành viên Ban Hợp tác Doanh nghiệp", org: "CLB Định hướng Sinh viên — NEU Orientation Club" },
-        { role: "Thành viên", org: "Đội SVTN Đồng hương Nghệ An — Hà Tĩnh NEU" },
-        { role: "CTV Ban Truyền thông — Kĩ thuật", org: "CLB Phong cách Sinh viên — NBC" },
+        { role: "Chủ nhiệm", org: "CLB Phát triển Nghề nghiệp ĐH KTQD - NEU Career Path Club Gen 2" },
+        { role: "Thành viên Ban Hợp tác Doanh nghiệp", org: "CLB Định hướng Sinh viên - NEU Orientation Club" },
+        { role: "Thành viên", org: "Đội SVTN Đồng hương Nghệ An - Hà Tĩnh NEU" },
+        { role: "CTV Ban Truyền thông - Kĩ thuật", org: "CLB Phong cách Sinh viên - NBC" },
         { role: "Thành viên", org: "CLB Toán Kinh tế và Công nghệ số" },
-        { role: "Cộng tác viên", org: "Trung tâm Đổi mới sáng tạo và Hướng nghiệp — NEU" }
+        { role: "Cộng tác viên", org: "Trung tâm Đổi mới sáng tạo và Hướng nghiệp - NEU" }
     ],
     events: [
-        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Business Development\"" },
-        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Content Creator\"" },
-        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Kiểm Toán\"" },
-        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Data\"" },
-        { role: "Trưởng BTC", name: "Webinar: \"Road To Case Champion — Hành Trình Chinh Phục Giải Case\"" },
-        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Marketing\"" },
-        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk — Chuyện Nghề Sales\"" }
+        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Business Development\"" },
+        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Content Creator\"" },
+        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Kiểm Toán\"" },
+        { role: "Trưởng BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Data\"" },
+        { role: "Trưởng BTC", name: "Webinar: \"Road To Case Champion - Hành Trình Chinh Phục Giải Case\"" },
+        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Marketing\"" },
+        { role: "Phó BTC", name: "Talkshow: \"Cafe Career Talk - Chuyện Nghề Sales\"" }
     ],
     competitions: [
         { rank: "Quán quân", name: "Social Entrepreneurship Preparation Hackathon" },
-        { rank: "Quán quân", name: "Cuộc thi Hùng biện đỉnh cao — Calliope 2026" },
+        { rank: "Quán quân", name: "Cuộc thi Hùng biện đỉnh cao - Calliope 2026" },
         { rank: "Giải ba", name: "Sinh viên NCKH cấp ĐH Kinh tế Quốc dân 2026" },
-        { rank: "Top 6", name: "MAM — Managerial Accounting Mastermind 2026" },
-        { rank: "Top 8", name: "Festival Bảo — Ngân Khám Phá 2026" },
+        { rank: "Top 6", name: "MAM - Managerial Accounting Mastermind 2026" },
+        { rank: "Top 8", name: "Festival Bảo - Ngân Khám Phá 2026" },
         { rank: "Top 10", name: "HR Sandbox 2026" },
         { rank: "Top 15", name: "The REAL Contest 2026" },
         { rank: "Top 15", name: "Tiếng Anh Kinh tế Econova 2026" },
         { rank: "Top 20", name: "Economic Research Champion 2026" },
-        { rank: "Top 30", name: "Đánh Thức Đam Mê 2025 — Bản Lĩnh Nhà Môi Giới BĐS 4.0" }
+        { rank: "Top 30", name: "Đánh Thức Đam Mê 2025 - Bản Lĩnh Nhà Môi Giới BĐS 4.0" }
     ],
     ambassadors: [
         { name: "Webinar \"Run Your Own Race\"", sub: "Khám phá Business Development, bắt đầu đường đua của riêng bạn" },
@@ -741,7 +741,7 @@ async function deployToGitHub() {
         if (getRes.ok) { sha = (await getRes.json()).sha; }
 
         status.textContent = 'Đang push lên GitHub...';
-        const putBody = { message: `Update portfolio — ${new Date().toLocaleString('vi-VN')}`, content: content };
+        const putBody = { message: `Update portfolio - ${new Date().toLocaleString('vi-VN')}`, content: content };
         if (sha) putBody.sha = sha;
 
         const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/index.html`, {
